@@ -1,0 +1,18 @@
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+
+  <div class="row">
+    <% if(searchResults != '') { %> <!--Si hay resultados de búsqueda-->
+      <% searchResults.forEach(function (note, index) { %> <!--Itera sobre cada nota encontrada-->
+
+        <a href="/dashboard/item/<%= note._id %>">
+        <h4><%= note.title %></h4> <!--Muestra el título de la nota-->
+        </a>
+
+      <% }) %> <!--Fin del ciclo for-each-->
+    <% } else { %> <!--Si no hay resultados de búsqueda-->
+      <p>No se han encontrado artículos.</p>
+    <% } %> <!--Fin de la condición if-else-->
+
+  </div>
+
+</div>

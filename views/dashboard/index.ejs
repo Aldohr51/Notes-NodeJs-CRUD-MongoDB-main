@@ -1,0 +1,80 @@
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+
+  <!-- Sección de encabezado de página -->
+  <div class="row mb-4">
+    <div class="col">
+      <!-- Se muestra el nombre del usuario actual -->
+      <h1>Hey, <%= userName %></h1>
+    </div>
+    <div class="col text-end">
+      <!-- Botón para agregar una nueva nota -->
+      <a href="/dashboard/add" class="btn btn-primary">+ Nueva Nota</a>
+    </div>
+  </div>
+
+  <!-- Sección de notas -->
+  <div class="row">
+    <% if (notes.length > 0) { for(var i=0; i < notes.length; i++) { %>
+      <div class="col-sm-3 mb-4">
+        <div class="card border-primary" style="min-height: 210px">
+          <!-- Se muestra el título y el cuerpo de la nota -->
+          <a href="/dashboard/item/<%= notes[i]._id %>" class="card-body text-decoration-none">
+            <h5 class="card-title"><%= notes[i].title %></h5>
+            <p class="card-text"><%= notes[i].body %></p>
+          </a>
+        </div>
+      </div>
+    <%  }} else { %>
+      <!-- Sección de mensaje para cuando no hay notas -->
+      <div class="row">
+        <div class="col-3">
+          <img src="/img/human-3.svg" alt="Human pointing hand toward a create button">
+        </div>
+        <div class="col mt-md-4">
+          <h2>Okay...</h2>
+          <h4>Empecemos con la primera nota.<br/><br/>
+            <!-- Botón para crear una nueva nota -->
+            <a href="/dashboard/add">Crear una nota!</a>
+          </h4>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Paginación de notas -->
+  <% if(notes.length > 0) { %>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center mt-5">
+        <% if(current == 1) { %>
+          <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+        <% } else { %>
+          <li class="page-item"><a class="page-link" href="/dashboard">Primero</a></li>
+        <% }  %>
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1 ) { %>
+          <li class="page-item"><a class="page-link" href="#">...</a></li>
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+          <% if(i == current ) { %>
+            <!-- Se muestra el número de página actual como texto plano -->
+            <li class="page-item"><a class="page-link" href="#"><%= i %></a></li>
+          <% } else { %>
+            <!-- Se muestra un enlace para ir a otras páginas de notas -->
+            <li class="page-item"><a class="page-link" href="/dashboard/?page=<%= i %>"><%= i %></a></li>
+          <% } %>
+          <% if(i == Number(current) + 4 && i < pages) {
+ %>
+            <li class="page-item"><a class="page-link" href="#">...</a></li>
+          <% } %>
+        <% } %>
+        <% if (current == pages) { %>
+            <li class="page-item disabled"><a class="page-link">Siguiente</a></li>
+        <% } else { %>
+            <li class="page-item"><a href="/dashboard/?page=<%= pages %>" class="page-link">Last</a></li>
+        <% } %>
+      </ul>
+    </nav>
+
+  <% } %>
+
+</div>
